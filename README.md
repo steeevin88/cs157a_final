@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+# PR Tracker Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Our project is a personal record tracker, used to track personal records at the gym. 
 
-## Available Scripts
+As avid gym-goers, it’s become increasingly important for us to track our progress in lifting weights at the gym. A valuable way to measure our gym progression and performance is by tracking our records of the weights we lift. For example, the bench press is a common exercise practiced by gym-goers. If someone were to bench press 135 lbs. one week, and then 155 lbs. two months later, we could reliably claim that such an individual has made progress. Additionally, personal records may be difficult to remember. Perhaps an individual pushed their limits and lifted a heavier weight than normal; however, upon returning to the gym, they may have forgotten this information and lost potential progress. 
 
-In the project directory, you can run:
+Ultimately, our application aims to mediate both issues by providing a professional way to track/log one’s progression in physical fitness.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Account Registration: Users will be able to register for an account by providing an email, username, and password.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* Exercise Log: Users will be able to log personal records for various gym exercises. These logs will include common associated details, including but not limited to exercise name, the weight lifted, the number of repetitions, and the date achieved. 
 
-### `npm test`
+* Progress Analysis: Users will be able to filter and sort their exercise logs based on specific exercise attributes or a combination of filters.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Goal Setting: Users will be able to set goals and compare them to current their progress.
 
-### `npm run build`
+* Gym Locator: Users will be able to post and view gym locations.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Motivation Wall: Users will be able to post motivational messages for others to see.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Profile Viewer: Users will be able to view their own profile and the profiles of others registered on the app.
