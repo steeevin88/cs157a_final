@@ -1,13 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { getExercises, setExercise, updateExercise, deleteExercise } = require('../controllers/exerciseController');
 
-router.get('/', (req, res) => {
-  const db = req.app.get('db');
-  const sql = "SELECT * FROM users";
-  db.query(sql, (err, result) => {
-    if (err) return res.json({ error: err });
-    return res.json(result);
-  });
-});
+router.route('/').get(getExercises).post(setExercise); // get exercises + set exercise
+router.route('/:id').put(updateExercise).delete(deleteExercise); // update + delete exercise
 
 module.exports = router;
