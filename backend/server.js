@@ -11,7 +11,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: process.env.DB_PASSWORD,
-  database: 'pr_tracker_application',
+  database: 'pr_tracker',
 });
 
 app.get('/users', (req, res) => {
