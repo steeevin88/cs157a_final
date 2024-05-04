@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const JWT = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 
@@ -36,10 +36,15 @@ const registerUser = asyncHandler(async (req, res) => {
   const result = db.query(insertSql, [name, email, encrypted]);
 
   if (result) {
-    res.status(201).json({message: 'User created successfully'});
+    const user = result[0];
+    res.status(200).json({
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.email),
+    });
   } else {
-    res.status(500);
-    throw new Error('Failed to create user');
+    res.status(400);
+    throw new Error('Invalid credentials.');
   }
 });
 
@@ -47,14 +52,68 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route  POST /api/users/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
-  res.json({message: 'Login user'});
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400);
+    throw new Error('Please fill in all fields.');
+  }
+
+  const db = req.app.get('db');
+
+  // check if user exists
+  const sql = "SELECT * FROM Users WHERE email = ?";
+  db.query(sql, [email], async (err, result) => {
+    if (err) return res.json({ error: err });
+    const userExists = result.length > 0;
+
+    if (!userExists) {
+      res.status(400);
+      throw new Error('User does not exist');
+    }
+
+    const user = result[0];
+
+    // match password - if here, user confirmed to exist
+    if (await bcrypt.compare(password, user.password)) {
+      res.json({
+          name: user.name,
+          email: user.email,
+          token: generateToken(user.email),
+      });
+    } else {
+        res.status(400);
+        throw new Error('Invalid login credentials.');
+    }
+  });
 });
 
 // @desc   Get user data
 // @route  GET /api/users/me
-// @access Public
+// @access Private
 const getUser = asyncHandler(async (req, res) => {
-  res.json({message: 'user data'});
+  const db = req.app.get('db');
+
+  // check if user exists
+  const sql = "SELECT * FROM Users WHERE email = ?";
+  db.query(sql, req.user.email, async (err, result) => {
+    if (err) return res.json({ error: err });
+
+    const user = result[0];
+    res.json({
+      name: user.name,
+      email: user.email,
+    });
+  });
 });
+
+
+// generate JWT
+// Generate JWT token, expires in 30 days
+const generateToken = (id) => {
+  return JWT.sign({ id }, process.env.JWT_SECRET, {
+      expiresIn: '30d',
+  });
+}
 
 module.exports = { registerUser, loginUser, getUser };
