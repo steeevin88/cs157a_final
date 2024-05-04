@@ -11,8 +11,10 @@ CREATE TABLE Users (
 -- 2. Exercises table
 CREATE TABLE Exercises (
   EID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  muscle_group VARCHAR(255)
+  muscle_group VARCHAR(255),
+  FOREIGN KEY (email) REFERENCES Users(email)
 );
 
 -- 3. Records table

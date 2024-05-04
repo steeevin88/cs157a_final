@@ -36,11 +36,15 @@ const registerUser = asyncHandler(async (req, res) => {
   const result = db.query(insertSql, [name, email, encrypted]);
 
   if (result) {
-    const user = result[0];
-    res.status(200).json({
-      name: user.name,
-      email: user.email,
-      token: generateToken(user.email),
+    // get user data after insertion
+    const sql = "SELECT * FROM Users WHERE email = ?";
+    db.query(sql, [email], (err, result) => {
+      const user = result[0];
+      res.status(200).json({
+        name: user.name,
+        email: user.email,
+        token: generateToken(user.email),
+      });
     });
   } else {
     res.status(400);
