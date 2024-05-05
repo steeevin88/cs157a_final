@@ -18,6 +18,7 @@ function ExerciseForm() {
 
     setName('')
     setMuscle_Group('')
+    window.location.reload()
   }
 
   return (
@@ -32,14 +33,20 @@ function ExerciseForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <label htmlFor='text'>Muscle Groups (optional)</label>
-          <input
-            type='text'
-            name='text'
-            id='text'
+          <label htmlFor='text'>Muscle Group</label>
+          <select
+            name='muscle_group'
+            id='muscle_group'
             value={muscle_group}
             onChange={(e) => setMuscle_Group(e.target.value)}
-          />
+          >
+            <option value=''>Select Muscle Group</option>
+            <option value='Chest'>Chest</option>
+            <option value='Back'>Back</option>
+            <option value='Legs'>Legs</option>
+            <option value='Arms/Shoulders'>Arms/Shoulders</option>
+            <option value='Other'>Other</option>
+          </select>
         </div>
         <div className='form-group'>
           <button className='btn btn-block' type='submit'>

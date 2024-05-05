@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ExerciseForm from "../components/ExerciseForm";
 import Spinner from "../components/Spinner";
 import { getExercises, reset } from "../features/exercises/exerciseSlice";
+import ExerciseCard from "../components/ExerciseCard";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -15,8 +16,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (isError) alert(message);
     if (!user) navigate("/login");
-
-    dispatch(getExercises());
+    else dispatch(getExercises());
 
     return () => {
       dispatch(reset());
@@ -34,11 +34,11 @@ export default function Dashboard() {
         <p>Exercises!</p>
       </section>
       <ExerciseForm />
-      <section className='content'>
+      <section className='mx-auto'>
         {exercises.length > 0 ? (
-          <div className='goals'>
+          <div className='grid grid-cols-2 gap-2 lg:grid-cols-4'>
             {exercises.map((exercise) => (
-              <p>{exercise.name}</p>
+              <ExerciseCard key={exercise.EID} exercise={exercise}/>
             ))}
           </div>
         ) : (
