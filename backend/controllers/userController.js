@@ -17,16 +17,22 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // check if user exists
   const sql = "SELECT * FROM Users WHERE email = ?";
-  db.query(sql, [email], (err, result) => {
-    if (err) return res.json({ error: err });
-    const userExists = result.length > 0;
-
-    if (userExists) {
-      res.status(400);
-      return res.json('User already exists');
-    }
+  const queryResult = await new Promise((resolve, reject) => {
+    db.query(sql, [email], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
   });
 
+  const userExists = queryResult.length > 0;
+  if (userExists) {
+    res.status(400);
+    throw new Error('User already exists');
+  }
+  
   // hash password using bcrypt
   const salt = await bcrypt.genSalt(10);
   const encrypted = await bcrypt.hash(password, salt);
@@ -67,29 +73,35 @@ const loginUser = asyncHandler(async (req, res) => {
 
   // check if user exists
   const sql = "SELECT * FROM Users WHERE email = ?";
-  db.query(sql, [email], async (err, result) => {
-    if (err) return res.json({ error: err });
-    const userExists = result.length > 0;
-
-    if (!userExists) {
-      res.status(400);
-      throw new Error('User does not exist');
-    }
-
-    const user = result[0];
-
-    // match password - if here, user confirmed to exist
-    if (await bcrypt.compare(password, user.password)) {
-      res.json({
-          name: user.name,
-          email: user.email,
-          token: generateToken(user.email),
-      });
-    } else {
-        res.status(400);
-        throw new Error('Invalid login credentials.');
-    }
+  const queryResult = await new Promise((resolve, reject) => {
+    db.query(sql, [email], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
   });
+
+  const userExists = queryResult.length > 0;
+  if (!userExists) {
+    res.status(400);
+    throw new Error('User does not exist');
+  }
+
+  const user = queryResult[0];
+
+  // match password - if here, user confirmed to exist
+  if (await bcrypt.compare(password, user.password)) {
+    res.json({
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.email),
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid login credentials.');
+  }
 });
 
 // @desc   Get user data
