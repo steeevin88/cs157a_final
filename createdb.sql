@@ -92,3 +92,15 @@ CREATE TABLE MotivationWallMessages (
   FOREIGN KEY (MWID) REFERENCES MotivationWall(MWID),
   FOREIGN KEY (MMID) REFERENCES MotivationalMessages(MMID)
 );
+
+-- Indexes via b-tree
+CREATE INDEX idx_users_email ON Users (email);
+CREATE INDEX idx_exercises_eid ON Exercises (EID);
+CREATE INDEX idx_records_rid ON Records (RID);
+CREATE INDEX idx_goals_gid ON Goals (GID);
+CREATE INDEX idx_location_lid ON Location (LID);
+CREATE INDEX idx_workoutroutines_wid ON WorkoutRoutines (WID);
+CREATE INDEX idx_workoutroutineexercises_eid_wid ON WorkoutRoutineExercises (EID, WID);
+CREATE INDEX idx_motivationwall_mwid ON MotivationWall (MWID);
+CREATE INDEX idx_motivationalmessages_mmid ON MotivationalMessages (MMID);
+CREATE INDEX idx_motivationwallmessages_mwid_mmid ON MotivationWallMessages (MWID, MMID);
