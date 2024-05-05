@@ -11,7 +11,7 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
       // Verify token + get user from token
       const decoded = JWT.verify(token, process.env.JWT_SECRET);
-      console.log(decoded);
+      // console.log(decoded);
 
       const db = req.app.get('db');
 
@@ -24,7 +24,7 @@ const authenticate = asyncHandler(async (req, res, next) => {
           throw new Error('Not authorized. Here');
         }
 
-        console.log(result);
+        // console.log(result);
 
         if (result.length === 0) {
           res.status(401);
