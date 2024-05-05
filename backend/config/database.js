@@ -12,7 +12,6 @@ const connectDB = () => {
     host: 'localhost',
     user: 'root',
     password: process.env.DB_PASSWORD,
-    // Remove the database name from here
   });
 
   db.connect((err) => {

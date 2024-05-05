@@ -108,19 +108,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route  GET /api/users/me
 // @access Private
 const getUser = asyncHandler(async (req, res) => {
-  const db = req.app.get('db');
-
-  // check if user exists
-  const sql = "SELECT * FROM Users WHERE email = ?";
-  db.query(sql, req.user.email, async (err, result) => {
-    if (err) return res.json({ error: err });
-
-    const user = result[0];
-    res.json({
-      name: user.name,
-      email: user.email,
-    });
-  });
+  res.json(req.user);
 });
 
 
