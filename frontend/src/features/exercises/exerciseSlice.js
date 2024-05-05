@@ -4,7 +4,7 @@ import exerciseService from './exerciseService'
 // Get exercises
 export const getExercises = createAsyncThunk('exercises/get', async (_, thunkAPI) => {
   try {
-    return await exerciseService.getExercises(thunkAPI.getState().user.user.token);
+    return await exerciseService.getExercises(thunkAPI.getState().auth.user.token);
   } catch (err) {
     const message = (err.response && err.response.data && err.response.data.message) || err.message || err.toString();
     return thunkAPI.rejectWithValue(message);
@@ -14,7 +14,7 @@ export const getExercises = createAsyncThunk('exercises/get', async (_, thunkAPI
 // Add an exercise
 export const addExercise = createAsyncThunk('exercises/add', async (exerciseData, thunkAPI) => {
   try {
-    return await exerciseService.addExercise(exerciseData, thunkAPI.getState().user.user.token);
+    return await exerciseService.addExercise(exerciseData, thunkAPI.getState().auth.user.token);
   } catch (err) {
     const message = (err.response && err.response.data && err.response.data.message) || err.message || err.toString();
     return thunkAPI.rejectWithValue(message);
@@ -24,7 +24,7 @@ export const addExercise = createAsyncThunk('exercises/add', async (exerciseData
 // Delete an exercise
 export const deleteExercise = createAsyncThunk('exercises/delete', async (id, thunkAPI) => {
   try {
-    return await exerciseService.deleteExercise(id, thunkAPI.getState().user.user.token);
+    return await exerciseService.deleteExercise(id, thunkAPI.getState().auth.user.token);
   } catch (err) {
     const message = (err.response && err.response.data && err.response.data.message) || err.message || err.toString();
     return thunkAPI.rejectWithValue(message);
