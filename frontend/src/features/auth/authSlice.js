@@ -44,7 +44,7 @@ export const authSlice = createSlice({
             state.message = ''
         }
     },
-    extraReducer: (builder) => {
+    extraReducers: (builder) => {
         builder
             .addCase(register.pending, (state) => {
                 state.isLoading = true
