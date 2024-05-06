@@ -14,7 +14,7 @@ CREATE TABLE Exercises (
   email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   muscle_group VARCHAR(255),
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 -- 3. Records table
@@ -25,8 +25,8 @@ CREATE TABLE Records (
   weight VARCHAR(255),
   repetitions INT,
   date DATE NOT NULL,
-  FOREIGN KEY (email) REFERENCES Users(email),
-  FOREIGN KEY (EID) REFERENCES Exercises(EID)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE,
+  FOREIGN KEY (EID) REFERENCES Exercises(EID) ON DELETE CASCADE
 );
 
 -- 4. Goals table
@@ -34,7 +34,7 @@ CREATE TABLE Goals (
   GID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 -- 5. Location table
@@ -44,7 +44,7 @@ CREATE TABLE Location (
   name VARCHAR(255) NOT NULL,
   address TEXT,
   description TEXT,
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 -- 6. Workout Routines table
@@ -54,7 +54,7 @@ CREATE TABLE WorkoutRoutines (
   name VARCHAR(255) NOT NULL,
   time VARCHAR(255),
   notes TEXT,
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 -- 7. Workout Routine Exercises table
@@ -72,7 +72,7 @@ CREATE TABLE MotivationWall (
   email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   description TEXT,
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 -- 9. MotivationalMessages table
@@ -81,7 +81,7 @@ CREATE TABLE MotivationalMessages (
   email VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   date DATETIME NOT NULL,
-  FOREIGN KEY (email) REFERENCES Users(email)
+  FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 -- 10. MotivationalWallMessages table
