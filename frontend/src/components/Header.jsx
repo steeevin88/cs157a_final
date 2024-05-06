@@ -15,8 +15,12 @@ function Header() {
     }
   return (
     <header className='header'>
-        <div className='logo'>
-            <Link to='/'>GoalSetter</Link>
+        <div className='flex gap-2 logo'>
+            <Link to='/'>GoalSetter</Link>|
+            <Link to='/goals'>Goals</Link>|
+            <Link to='/gyms'>Find Gyms</Link>|
+            <Link to='/workouts'>Workouts</Link>|
+            <Link to='/motivation'>Motivation Wall</Link>
         </div>
         <ul>
             { user ? (

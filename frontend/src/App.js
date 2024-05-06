@@ -18,6 +18,10 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/exercise/:id' element={<Exercise />} />
+            <Route path='/goals' element={<h1>Goals</h1>} />
+            <Route path='/gyms' element={<h1>Find Gyms</h1>} />
+            <Route path='/workouts' element={<h1>Workouts</h1>} />
+            <Route path='/motivation' element={<h1>Motivation Wall</h1>} />
           </Routes>
         </div>
       </Router>
