@@ -31,6 +31,7 @@ function ExerciseForm() {
             name='text'
             id='text'
             value={name}
+            placeholder='Enter Exercise Name'
             onChange={(e) => setName(e.target.value)}
           />
           <label htmlFor='text'>Muscle Group</label>
