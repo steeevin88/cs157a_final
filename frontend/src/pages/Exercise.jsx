@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getExerciseById } from "../features/exercises/exerciseSlice";
 import { addRecord, getRecords } from "../features/records/recordSlice";
 import Spinner from "../components/Spinner";
+import RecordCard from "../components/RecordCard";
 
 export default function Exercise() {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ export default function Exercise() {
   let { id } = useParams(); // Get the id from the URL
 
   const { user } = useSelector((state) => state.auth);
-  const { exercises, isLoading, isError, message} = useSelector((state) => state.exercises);
+  const { exercises, isExerciseLoading, isExerciseError, exerciseMessage } = useSelector((state) => state.exercises);
+  const { records, isRecordLoading, isRecordError, recordMessage } = useSelector((state) => state.records);
+  
 
   const [formData, setFormData] = useState({
     weight: "",
@@ -36,18 +39,20 @@ export default function Exercise() {
     }))
 
     setFormData({ weight: "", repetitions: "" });
+    window.location.reload();
   };
 
   useEffect(() => {
-    if (isError) alert(message);
+    if (isRecordError) alert(recordMessage);
+    if (isExerciseError) alert(exerciseMessage);
     if (!user) navigate("/login");
     else {
       dispatch(getExerciseById(id));
       dispatch(getRecords(id));
     }
-  }, [user, navigate, isError, message, dispatch, id]);
+  }, [user, navigate, isExerciseError, exerciseMessage, isRecordError, recordMessage, dispatch, id]);
 
-  if (isLoading) {
+  if (isExerciseLoading || isRecordLoading) {
     return <Spinner />
   }
 
@@ -77,12 +82,29 @@ export default function Exercise() {
             onChange={handleChange}
             placeholder="Repetitions"
           />
-          <button type="submit">Submit</button>
+          <button type="submit" className="border-2 border-black">Submit</button>
         </form>
       </div>
-      <div className="w-[45vw]">
-        text
-      </div>
+      <section className='w-[45vw]'>
+        {records.length > 0 ? (
+          <div className='grid grid-cols-1 gap-2'>
+            {records
+              .slice() // Create a copy of the array
+              .sort((a, b) => {
+                if (a.weight !== b.weight) {
+                  return b.weight - a.weight; // Sort by weight in descending order
+                } else {
+                  return b.repetitions - a.repetitions; // Sort by repetitions in descending order
+                }
+              })
+              .map((record) => (
+                <RecordCard key={record.RID} record={record}/>
+              ))}
+          </div>
+        ) : (
+          <h3>You have not recorded any PRs</h3>
+        )}
+      </section>
     </div>
   )
 }
