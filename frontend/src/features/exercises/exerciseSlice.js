@@ -11,6 +11,16 @@ export const getExercises = createAsyncThunk('exercises/get', async (_, thunkAPI
   }
 })
 
+// Get exercise by ID
+export const getExerciseById = createAsyncThunk('exercises/getById', async (id, thunkAPI) => {
+  try {
+    return await exerciseService.getExerciseById(id, thunkAPI.getState().auth.user.token);
+  } catch (err) {
+    const message = (err.response && err.response.data && err.response.data.message) || err.message || err.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+})
+
 // Add an exercise
 export const addExercise = createAsyncThunk('exercises/add', async (exerciseData, thunkAPI) => {
   try {
@@ -59,6 +69,13 @@ export const exerciseSlice = createSlice({
       state.fulfilled = true;
       state.exercises = action.payload;
     }).addCase(getExercises.rejected, (state, action) => {
+      state.fulfilled = false;
+      state.error = true;
+      state.message = action.payload;
+    }).addCase(getExerciseById.fulfilled, (state, action) => {
+      state.fulfilled = true;
+      state.exercises = action.payload;
+    }).addCase(getExerciseById.rejected, (state, action) => {
       state.fulfilled = false;
       state.error = true;
       state.message = action.payload;

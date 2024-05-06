@@ -14,6 +14,35 @@ const getExercises = asyncHandler(async (req, res) => {
   });
 });
 
+
+// @desc      Get exercise by ID
+// @route     GET /api/exercises/:id
+// @access    Private
+const getExerciseById = asyncHandler(async (req, res) => {
+  const exerciseId = req.params.id;
+  const email = req.user.email;
+
+  const db = req.app.get('db');
+  const sql = "SELECT * FROM exercises WHERE EID = ? AND email = ?";
+  const values = [exerciseId, email];
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      res.status(500);
+      throw new Error('Failed to get exercise');
+    }
+
+    const exercise = result[0];
+
+    if (!exercise) {
+      res.status(404);
+      throw new Error('Exercise not found or you do not own it');
+    }
+
+    return res.json(exercise);
+  });
+});
+
 // @desc      Set exercise
 // @route     POST /api/exercises
 // @access    Private
@@ -158,6 +187,7 @@ const deleteExercise = asyncHandler(async (req, res) => {
 
 module.exports = {
   getExercises,
+  getExerciseById,
   setExercise,
   updateExercise,
   deleteExercise

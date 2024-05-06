@@ -9,6 +9,13 @@ const getExercises = async (token) => {
   return response.data;
 }
 
+// Get exercise by ID
+const getExerciseById = async (id, token) => {
+  const authToken = { headers: { Authorization: `Bearer ${token}`}}
+  const response = await axios.get(API_URL + '/' + id, authToken);
+  return response.data;
+}
+
 // Add a new exercise
 const addExercise = async (exerciseData, token) => {
   const authToken = { headers: { Authorization: `Bearer ${token}`}}
@@ -25,6 +32,7 @@ const deleteExercise = async (id, token) => {
 
 const exerciseService = {
   getExercises,
+  getExerciseById,
   addExercise,
   deleteExercise,
 }

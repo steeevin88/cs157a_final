@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getExercises, setExercise, updateExercise, deleteExercise } = require('../controllers/exerciseController');
+const { getExercises, getExerciseById, setExercise, updateExercise, deleteExercise } = require('../controllers/exerciseController');
 const { authenticate } = require('../middleware/authMiddleware');
 
-router.route('/').get(authenticate, getExercises).post(authenticate, setExercise); // get exercises + set exercise
-router.route('/:id').put(authenticate, updateExercise).delete(authenticate, deleteExercise); // update + delete exercise
+// get exercises + set exercise
+router.route('/').get(authenticate, getExercises).post(authenticate, setExercise);
+// get exercise by id, update exercise, delete exercise
+router.route('/:id').get(authenticate, getExerciseById).put(authenticate, updateExercise).delete(authenticate, deleteExercise);
 
 module.exports = router;
