@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 
 import { getExerciseById } from "../features/exercises/exerciseSlice";
+import { addRecord, getRecords } from "../features/records/recordSlice";
 import Spinner from "../components/Spinner";
 
 export default function Exercise() {
@@ -27,13 +28,23 @@ export default function Exercise() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+    
+    dispatch(addRecord({ 
+      weight:weight,
+      repetitions:repetitions,
+      exercise_id: String(id)
+    }))
+
+    setFormData({ weight: "", repetitions: "" });
   };
 
   useEffect(() => {
     if (isError) alert(message);
     if (!user) navigate("/login");
-    else dispatch(getExerciseById(id));
+    else {
+      dispatch(getExerciseById(id));
+      dispatch(getRecords(id));
+    }
   }, [user, navigate, isError, message, dispatch, id]);
 
   if (isLoading) {

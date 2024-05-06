@@ -5,9 +5,10 @@ const asyncHandler = require('express-async-handler')
 // @access    Private
 const getRecords = asyncHandler(async (req, res) => {
   const db = req.app.get('db');
+  const exercise_id = req.params.id;
   const email = req.user.email;
-  const sql = "SELECT * FROM Records WHERE email = ?";
-  const values = [email];
+  const sql = "SELECT * FROM Records WHERE email = ? AND EID = ?";
+  const values = [email, exercise_id];
   db.query(sql, values, (err, result) => {
     if (err) return res.json({ error: err });
     return res.json(result);
@@ -18,22 +19,22 @@ const getRecords = asyncHandler(async (req, res) => {
 // @route     POST /api/records
 // @access    Private
 const setRecord = asyncHandler(async (req, res) => {
-  const exerciseId = req.params.id;
-  const { weight, repetitions} = req.body;
+  const { weight, repetitions, exercise_id } = req.body;
   const email = req.user.email;
 
   if (!weight || !repetitions) {
     res.status(400);
-    throw new Error('Please provide weight, repetitions, and EID fields');
+    throw new Error('Please provide weight and repetitions fields');
   }
 
   const db = req.app.get('db');
   const sql = 'INSERT INTO Records (email, EID, weight, repetitions, date) VALUES (?, ?, ?, ?, CURDATE())';
-  const values = [email, exerciseId, weight, repetitions];
+  const values = [email, parseInt(exercise_id), weight, parseInt(repetitions)];
 
   db.query(sql, values, (err, result) => {
     if (err) {
       res.status(500);
+      console.log(err);
       throw new Error('Failed to set record');
     }
 
