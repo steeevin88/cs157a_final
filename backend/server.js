@@ -19,5 +19,6 @@ app.use(errorHandler);
 // routes
 app.use('/api/exercises', require('./routes/exerciseRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/records', require('./routes/recordRoutes'));
 
 app.listen(8000, () => {console.log(`Server is running on port 8000`)});
