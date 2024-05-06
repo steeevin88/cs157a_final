@@ -7,7 +7,7 @@ function RecordCard({ record }) {
   return (
     <div className='px-8 mx-auto border-2 border-black rounded-lg'>
       <p className="text-lg font-bold">Weight: {record.weight}</p>
-      <p className="">Repetitions: {record.repetitions}</p>
+      <p className="text-md">Repetitions: {record.repetitions}</p>
       <button onClick={() => dispatch(deleteRecord(record.RID))} className='close'>
         X
       </button>

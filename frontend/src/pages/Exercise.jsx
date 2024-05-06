@@ -60,8 +60,8 @@ export default function Exercise() {
     <div className="flex flex-row justify-center gap-2 mx-auto text-center">
       <div className="w-[45vw] flex gap-4 flex-col">
         <div>
-          <p className="text-5xl font-bold">{exercises.name}</p>
-          <p className="text-2xl font-bold">Muscle Group: {exercises.muscle_group}</p>
+          <p className="mb-3 text-5xl font-bold">{exercises.name}</p>
+          <p className="text-2xl">Muscle Group: {exercises.muscle_group}</p>
         </div>
         <hr className="border-2 border-black rounded-lg"/>
         <p className="text-2xl font-bold">Record Your PRs!</p>
