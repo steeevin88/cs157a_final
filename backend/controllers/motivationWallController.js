@@ -67,7 +67,7 @@ const createMotivationWall = asyncHandler(async (req, res) => {
 });
 
 // @desc      Delete motivation wall
-// @route     DELETE /api/motivation_wall/:id
+// @route     DELETE /api/motivation_walls/:id
 // @access    Private
 const deleteMotivationWall = asyncHandler(async (req, res) => {
   const motivationWallId = req.params.id;
