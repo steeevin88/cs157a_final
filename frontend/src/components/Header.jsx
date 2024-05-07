@@ -16,7 +16,7 @@ function Header() {
   return (
     <header className='header'>
         <div className='flex gap-2 logo'>
-            <Link to='/' className='font-bold'>GoalSetter</Link>|
+            <Link to='/' className='font-bold'>GymRatz</Link>|
             <Link to='/goals'>Goals</Link>|
             <Link to='/gyms'>Find Gyms</Link>|
             <Link to='/workouts'>Workouts</Link>|
