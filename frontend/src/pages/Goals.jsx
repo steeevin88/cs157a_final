@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
 import { getGoals, reset } from "../features/goals/goalSlice";
+import GoalForm from "../components/GoalForm";
 
 export default function Goals() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export default function Goals() {
       <section className="heading">
         <p>Goals!</p>
       </section>
+      <GoalForm />
       <section className='mx-auto'>
         {goals.length > 0 ? (
           <div className='grid grid-cols-2 gap-2 lg:grid-cols-4'>

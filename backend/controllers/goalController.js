@@ -18,17 +18,17 @@ const getGoals = asyncHandler(async (req, res) => {
 // @route     POST /api/goals
 // @access    Private
 const setGoal = asyncHandler(async (req, res) => {
-  const { description } = req.body;
+  const { name, description } = req.body;
   const email = req.user.email;
 
-  if (!description) {
+  if (!name || !description) {
     res.status(400);
-    throw new Error('Please provide a goal description');
+    throw new Error('Please provide both a goal name and description');
   }
 
   const db = req.app.get('db');
-  const sql = 'INSERT INTO Goals (email, description) VALUES (?, ?)';
-  const values = [email, description];
+  const sql = 'INSERT INTO Goals (email, name, description) VALUES (?, ?, ?)';
+  const values = [email, name, description];
 
   db.query(sql, values, (err, result) => {
     if (err) {
