@@ -24,6 +24,7 @@ function App() {
             <Route path='/gyms' element={<h1>Find Gyms</h1>} />
             <Route path='/workouts' element={<h1>Workouts</h1>} />
             <Route path='/motivation' element={<MotivationWalls />} />
+            <Route path='/motivation/:id' element={<p>test</p>} />
           </Routes>
         </div>
       </Router>
