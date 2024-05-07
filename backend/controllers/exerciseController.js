@@ -29,30 +29,30 @@ const getExerciseById = asyncHandler(async (req, res) => {
   db.query(sql, values, (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to get exercise');
+      throw new Error('Failed to get exercise.');
     }
 
     const exercise = result[0];
 
     if (!exercise) {
       res.status(404);
-      throw new Error('Exercise not found or you do not own it');
+      throw new Error('Exercise not found or you do not own it.');
     }
 
     return res.json(exercise);
   });
 });
 
-// @desc      Set exercise
+// @desc      Create exercise
 // @route     POST /api/exercises
 // @access    Private
-const setExercise = asyncHandler(async (req, res) => {
+const createExercise = asyncHandler(async (req, res) => {
   const { name, muscle_group } = req.body;
   const email = req.user.email;
 
   if (!name || !muscle_group) {
     res.status(400);
-    throw new Error('Please provide both name and muscle_group fields');
+    throw new Error('Please provide both name and muscle_group fields.');
   }
 
   const db = req.app.get('db');
@@ -65,7 +65,7 @@ const setExercise = asyncHandler(async (req, res) => {
       throw new Error('Failed to set exercise');
     }
 
-    return res.status(200).json({ message: 'Exercise added successfully!' });
+    return res.status(200).json({ message: 'Exercise added successfully.' });
   });
 });
 
@@ -79,7 +79,7 @@ const updateExercise = asyncHandler(async (req, res) => {
 
   if (!name || !muscle_group) {
     res.status(400);
-    throw new Error('Please provide both name and muscle_group fields');
+    throw new Error('Please provide both name and muscle_group fields.');
   }
 
   const db = req.app.get('db');
@@ -89,14 +89,14 @@ const updateExercise = asyncHandler(async (req, res) => {
   db.query(sql_1, [email], (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to check user');
+      throw new Error('Failed to check user.');
     }
 
     const userExists = result.length > 0;
 
     if (!userExists) {
       res.status(400);
-      throw new Error('User does not exist');
+      throw new Error('User does not exist.');
     }
 
     // if user exists, check if current user owns this exercise
@@ -104,14 +104,14 @@ const updateExercise = asyncHandler(async (req, res) => {
     db.query(sql_2, [exerciseId, email], (err, result) => {
       if (err) {
         res.status(500);
-        throw new Error('Failed to check exercise ownership');
+        throw new Error('Failed to check exercise ownership.');
       }
 
       const exerciseExists = result.length > 0;
 
       if (!exerciseExists) {
         res.status(400);
-        throw new Error('Exercise does not exist or you do not own it');
+        throw new Error('Exercise does not exist or you do not own it.');
       }
 
       // if user owns the exercise, update exercise
@@ -121,10 +121,10 @@ const updateExercise = asyncHandler(async (req, res) => {
       db.query(sql_3, values, (err, result) => {
         if (err) {
           res.status(500);
-          throw new Error('Failed to update exercise');
+          throw new Error('Failed to update exercise.');
         }
 
-        return res.status(200).json({ message: 'Exercise updated successfully!' });
+        return res.status(200).json({ message: 'Exercise updated successfully.' });
       });
     });
   });

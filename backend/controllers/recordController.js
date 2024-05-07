@@ -15,16 +15,16 @@ const getRecords = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc      Set record
+// @desc      Create record
 // @route     POST /api/records
 // @access    Private
-const setRecord = asyncHandler(async (req, res) => {
+const createRecord = asyncHandler(async (req, res) => {
   const { weight, repetitions, exercise_id } = req.body;
   const email = req.user.email;
 
   if (!weight || !repetitions) {
     res.status(400);
-    throw new Error('Please provide weight and repetitions fields');
+    throw new Error('Please provide weight and repetitions fields.');
   }
 
   const db = req.app.get('db');
@@ -35,10 +35,10 @@ const setRecord = asyncHandler(async (req, res) => {
     if (err) {
       res.status(500);
       console.log(err);
-      throw new Error('Failed to set record');
+      throw new Error('Failed to set record.');
     }
 
-    return res.status(200).json({ message: 'Record added successfully!' });
+    return res.status(200).json({ message: 'Record added successfully.' });
   });
 });
 
@@ -56,14 +56,14 @@ const deleteRecord = asyncHandler(async (req, res) => {
   db.query(sql_1, [email], (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to check user');
+      throw new Error('Failed to check user.');
     }
 
     const userExists = result.length > 0;
 
     if (!userExists) {
       res.status(400);
-      throw new Error('User does not exist');
+      throw new Error('User does not exist.');
     }
 
     // if user exists, check if current user owns this exercise
@@ -71,14 +71,14 @@ const deleteRecord = asyncHandler(async (req, res) => {
     db.query(sql_2, [recordId, email], (err, result) => {
       if (err) {
         res.status(500);
-        throw new Error('Failed to check exercise ownership');
+        throw new Error('Failed to check exercise ownership.');
       }
 
       const recordExists = result.length > 0;
 
       if (!recordExists) {
         res.status(400);
-        throw new Error('Record does not exist or you do not own it');
+        throw new Error('Record does not exist or you do not own it.');
       }
 
       // if user owns the exercise, delete exercise
@@ -88,10 +88,10 @@ const deleteRecord = asyncHandler(async (req, res) => {
       db.query(sql_3, values, (err, result) => {
         if (err) {
           res.status(500);
-          throw new Error('Failed to delete record');
+          throw new Error('Failed to delete record.');
         }
 
-        return res.status(200).json({ message: 'Record deleted successfully!' });
+        return res.status(200).json({ message: 'Record deleted successfully.' });
       });
     });
   });

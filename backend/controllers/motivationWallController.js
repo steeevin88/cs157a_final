@@ -26,14 +26,14 @@ const getMotivationWallById = asyncHandler(async (req, res) => {
   db.query(sql, values, (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to get motivation wall');
+      throw new Error('Failed to get motivation wall.');
     }
 
     const motivationWall = result[0];
 
     if (!motivationWall) {
       res.status(404);
-      throw new Error('Motivation wall not found');
+      throw new Error('Motivation wall not found.');
     }
 
     return res.json(motivationWall);
@@ -49,7 +49,7 @@ const createMotivationWall = asyncHandler(async (req, res) => {
 
   if (!name || !description) {
     res.status(400);
-    throw new Error('Please provide both name and description fields');
+    throw new Error('Please provide both name and description fields.');
   }
 
   const db = req.app.get('db');
@@ -59,10 +59,10 @@ const createMotivationWall = asyncHandler(async (req, res) => {
   db.query(sql, values, (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to create motivation wall');
+      throw new Error('Failed to create motivation wall.');
     }
 
-    return res.status(200).json({ message: 'Motivation wall added successfully!' });
+    return res.status(200).json({ message: 'Motivation wall added successfully.' });
   });
 });
 
@@ -80,14 +80,14 @@ const deleteMotivationWall = asyncHandler(async (req, res) => {
   db.query(sql_1, [email], (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to check user');
+      throw new Error('Failed to check user.');
     }
 
     const userExists = result.length > 0;
 
     if (!userExists) {
       res.status(400);
-      throw new Error('User does not exist');
+      throw new Error('User does not exist.');
     }
 
     // if user exists, check if current user owns this exercise
@@ -95,14 +95,14 @@ const deleteMotivationWall = asyncHandler(async (req, res) => {
     db.query(sql_2, [motivationWallId, email], (err, result) => {
       if (err) {
         res.status(500);
-        throw new Error('Failed to check motivation wall ownership');
+        throw new Error('Failed to check motivation wall ownership.');
       }
 
       const motivationWallExists = result.length > 0;
 
       if (!motivationWallExists) {
         res.status(400);
-        throw new Error('Motivational wall does not exist or you do not own it');
+        throw new Error('Motivational wall does not exist or you do not own it.');
       }
 
       // if user owns the exercise, delete exercise
@@ -111,10 +111,10 @@ const deleteMotivationWall = asyncHandler(async (req, res) => {
       db.query(sql_3, values, (err, result) => {
         if (err) {
           res.status(500);
-          throw new Error('Failed to delete motivation wall');
+          throw new Error('Failed to delete motivation wall.');
         }
 
-        return res.status(200).json({ message: 'Motivation wall deleted successfully!' });
+        return res.status(200).json({ message: 'Motivation wall deleted successfully.' });
       });
     });
   });

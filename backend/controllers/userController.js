@@ -10,7 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (!name || !email || !password) {
     res.status(400);
-    throw new Error('Please provide all fields');
+    throw new Error('Please provide all fields.');
   };
 
   const db = req.app.get('db');
@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const userExists = queryResult.length > 0;
   if (userExists) {
     res.status(400);
-    throw new Error('User already exists');
+    throw new Error('User already exists.');
   }
   
   // hash password using bcrypt
@@ -86,7 +86,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const userExists = queryResult.length > 0;
   if (!userExists) {
     res.status(400);
-    throw new Error('User does not exist');
+    throw new Error('User does not exist.');
   }
 
   const user = queryResult[0];

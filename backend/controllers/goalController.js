@@ -14,16 +14,16 @@ const getGoals = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc      Set goal
+// @desc      Create goal
 // @route     POST /api/goals
 // @access    Private
-const setGoal = asyncHandler(async (req, res) => {
+const createGoal = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
   const email = req.user.email;
 
   if (!name || !description) {
     res.status(400);
-    throw new Error('Please provide both a goal name and description');
+    throw new Error('Please provide both a goal name and description.');
   }
 
   const db = req.app.get('db');
@@ -33,10 +33,10 @@ const setGoal = asyncHandler(async (req, res) => {
   db.query(sql, values, (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to set goal');
+      throw new Error('Failed to set goal.');
     }
 
-    return res.status(200).json({ message: 'Goal added successfully!' });
+    return res.status(200).json({ message: 'Goal added successfully.' });
   });
 });
 
@@ -54,14 +54,14 @@ const deleteGoal = asyncHandler(async (req, res) => {
   db.query(sql_1, [email], (err, result) => {
     if (err) {
       res.status(500);
-      throw new Error('Failed to check user');
+      throw new Error('Failed to check user.');
     }
 
     const userExists = result.length > 0;
 
     if (!userExists) {
       res.status(400);
-      throw new Error('User does not exist');
+      throw new Error('User does not exist.');
     }
 
     // if user exists, check if current user owns this goal
@@ -69,14 +69,14 @@ const deleteGoal = asyncHandler(async (req, res) => {
     db.query(sql_2, [goalId, email], (err, result) => {
       if (err) {
         res.status(500);
-        throw new Error('Failed to check goal ownership');
+        throw new Error('Failed to check goal ownership.');
       }
 
       const goalExists = result.length > 0;
 
       if (!goalExists) {
         res.status(400);
-        throw new Error('Goal does not exist or you do not own it');
+        throw new Error('Goal does not exist or you do not own it.');
       }
 
       // if user owns the goal, delete goal
@@ -86,10 +86,10 @@ const deleteGoal = asyncHandler(async (req, res) => {
       db.query(sql_3, values, (err, result) => {
         if (err) {
           res.status(500);
-          throw new Error('Failed to delete goal');
+          throw new Error('Failed to delete goal.');
         }
 
-        return res.status(200).json({ message: 'Goal deleted successfully!' });
+        return res.status(200).json({ message: 'Goal deleted successfully.' });
       });
     });
   });
