@@ -105,3 +105,113 @@ CREATE INDEX idx_workoutroutineexercises_eid_wid ON WorkoutRoutineExercises (EID
 CREATE INDEX idx_motivationwall_mwid ON MotivationWall (MWID);
 CREATE INDEX idx_motivationalmessages_mmid ON MotivationalMessages (MMID);
 CREATE INDEX idx_motivationwallmessages_mwid_mmid ON MotivationWallMessages (MWID, MMID);
+
+-- Insert default user, password is password for ALL users...
+INSERT INTO Users (email, name, password)
+VALUES 
+  ('steven@gmail.com', 'Steven', '$2a$10$HKB8KJw/pwWLCCwzc1yteOwvnmF3HROAiEBtNQLIRX1cMPcrQgKo.'),
+  ('ethan@gmail.com', 'Ethan', '$2a$10$jkzzJx3RxU4P6cw4T0hiNOjYu8PwUQUBoECfOh4WudhaQez0SPLpK'),
+  ('andy@gmail.com', 'Andy', '$2a$10$FESae.sYYDFlFxTwXas6iuTMffI8/iDYuu/ojWW3jl4qythdsdgF.'),
+  ('ysabella@gmail.com', 'Ysabella', '$2a$10$HG.1UlYac.qHiuAJo3X8WeEa2pfyXchX7glDbHqRL5fYArzUuKLgy'),
+  ('kelly@gmail.com', 'Kelly', '$2a$10$h/U1sMA3SDoghYKXIhO2Xu4JgAqcH/ig5r0JfsCvDwlQRcD.EQFgu');
+
+-- Insert default exercises for users
+INSERT INTO Exercises (email, name, muscle_group)
+VALUES 
+  ('steven@gmail.com', 'Bench Press', 'Chest'),
+  ('steven@gmail.com', 'Squat', 'Legs'),
+  ('steven@gmail.com', 'Leg Press', 'Legs'),
+  ('steven@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
+  ('steven@gmail.com', 'Lat Pulldown', 'Back'),
+  ('steven@gmail.com', 'Abdominal Crunch', 'Other'),
+  ('steven@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
+  ('ethan@gmail.com', 'Bench Press', 'Chest'),
+  ('ethan@gmail.com', 'Squat', 'Legs'),
+  ('ethan@gmail.com', 'Leg Press', 'Legs'),
+  ('ethan@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
+  ('ethan@gmail.com', 'Lat Pulldown', 'Back'),
+  ('ethan@gmail.com', 'Abdominal Crunch', 'Other'),
+  ('ethan@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
+  ('kelly@gmail.com', 'Bench Press', 'Chest'),
+  ('kelly@gmail.com', 'Squat', 'Legs'),
+  ('kelly@gmail.com', 'Leg Press', 'Legs'),
+  ('kelly@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
+  ('kelly@gmail.com', 'Lat Pulldown', 'Back'),
+  ('kelly@gmail.com', 'Abdominal Crunch', 'Other'),
+  ('kelly@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
+  ('ysabella@gmail.com', 'Bench Press', 'Chest'),
+  ('ysabella@gmail.com', 'Squat', 'Legs'),
+  ('ysabella@gmail.com', 'Leg Press', 'Legs'),
+  ('ysabella@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
+  ('ysabella@gmail.com', 'Lat Pulldown', 'Back'),
+  ('ysabella@gmail.com', 'Abdominal Crunch', 'Other'),
+  ('ysabella@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
+  ('andy@gmail.com', 'Bench Press', 'Chest'),
+  ('andy@gmail.com', 'Squat', 'Legs'),
+  ('andy@gmail.com', 'Leg Press', 'Legs'),
+  ('andy@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
+  ('andy@gmail.com', 'Lat Pulldown', 'Back'),
+  ('andy@gmail.com', 'Abdominal Crunch', 'Other'),
+  ('andy@gmail.com', 'Bicep Curls', 'Arms/Shoulders');
+
+-- Insert default records for users (bench press)
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '95 lbs', 5, DATE_SUB(CURDATE(), INTERVAL 8 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Bench Press';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '100 lbs', 6, DATE_SUB(CURDATE(), INTERVAL 7 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Bench Press';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '135 lbs', 3, DATE_SUB(CURDATE(), INTERVAL 5 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Bench Press';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '135 lbs', 7, DATE_SUB(CURDATE(), INTERVAL 2 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Bench Press';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '155 lbs', 1, CURDATE()
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Bench Press';
+
+-- Insert default records for users (squat)
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '135 lbs', 4, DATE_SUB(CURDATE(), INTERVAL 8 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Squat';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '145 lbs', 6, DATE_SUB(CURDATE(), INTERVAL 7 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Squat';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '135 lbs', 10, DATE_SUB(CURDATE(), INTERVAL 5 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Squat';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '155 lbs', 7, DATE_SUB(CURDATE(), INTERVAL 2 WEEK)
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Squat';
+
+INSERT INTO Records (email, EID, weight, repetitions, date)
+SELECT U.email, E.EID, '185 lbs', 1, CURDATE()
+FROM Users U
+JOIN Exercises E ON U.email = E.email
+WHERE E.name = 'Squat';
