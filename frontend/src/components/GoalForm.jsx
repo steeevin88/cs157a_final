@@ -24,7 +24,7 @@ function GoalForm() {
   return (
     <section className='form'>
       <form onSubmit={onSubmit}>
-        <div className='form-group'>
+        <div className='text-lg form-group'>
           <label htmlFor='text'>What's the name of your goal?</label>
           <input
             type='text'
@@ -35,7 +35,7 @@ function GoalForm() {
             onChange={(e) => setName(e.target.value)}
           />
           <label htmlFor='text'>Description</label>
-          <input
+          <textarea
             type='text'
             name='text'
             id='text'

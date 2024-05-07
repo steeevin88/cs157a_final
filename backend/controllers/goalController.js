@@ -64,7 +64,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
       throw new Error('User does not exist');
     }
 
-    // if user exists, check if current user owns this exercise
+    // if user exists, check if current user owns this goal
     const sql_2 = "SELECT * FROM Goals WHERE GID = ? AND email = ?";
     db.query(sql_2, [goalId, email], (err, result) => {
       if (err) {
@@ -72,16 +72,16 @@ const deleteGoal = asyncHandler(async (req, res) => {
         throw new Error('Failed to check goal ownership');
       }
 
-      const exerciseExists = result.length > 0;
+      const goalExists = result.length > 0;
 
-      if (!exerciseExists) {
+      if (!goalExists) {
         res.status(400);
         throw new Error('Goal does not exist or you do not own it');
       }
 
-      // if user owns the exercise, delete exercise
+      // if user owns the goal, delete goal
       const sql_3 = 'DELETE FROM Goals WHERE GID = ?';
-      const values = [exerciseId];
+      const values = [goalId];
 
       db.query(sql_3, values, (err, result) => {
         if (err) {

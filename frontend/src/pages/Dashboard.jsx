@@ -31,7 +31,7 @@ export default function Dashboard() {
     <>
       <section className="heading">
         <h1>Welcome {user && user.name}</h1>
-        <p>Exercises!</p>
+        <p className="font-semibold text-gray-500">Exercises!</p>
       </section>
       <ExerciseForm />
       <section className='mx-auto'>
