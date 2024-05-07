@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Exercise from './pages/Exercise'
 import Goals from './pages/Goals'
+import MotivationWalls from './pages/MotivationWalls'
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Route path='/goals' element={<Goals />} />
             <Route path='/gyms' element={<h1>Find Gyms</h1>} />
             <Route path='/workouts' element={<h1>Workouts</h1>} />
-            <Route path='/motivation' element={<h1>Motivation Wall</h1>} />
+            <Route path='/motivation' element={<MotivationWalls />} />
           </Routes>
         </div>
       </Router>
