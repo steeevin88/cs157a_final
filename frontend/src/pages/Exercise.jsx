@@ -91,10 +91,15 @@ export default function Exercise() {
             {records
               .slice() // Create a copy of the array
               .sort((a, b) => {
+                return new Date(b.date) - new Date(a.date); // Sort by date in descending order
+              })
+              .sort((a, b) => {
                 if (a.weight !== b.weight) {
                   return b.weight - a.weight; // Sort by weight in descending order
-                } else {
+                } else if (a.repetitions !== b.repetitions) {
                   return b.repetitions - a.repetitions; // Sort by repetitions in descending order
+                } else {
+                  return 0;
                 }
               })
               .map((record) => (
