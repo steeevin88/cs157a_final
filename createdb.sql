@@ -221,3 +221,12 @@ FROM Users U;
 INSERT INTO Goals (email, name, description)
 SELECT U.email, 'Gain Strength in Shoulder Press', 'I want to increase my shoulder press strength because my shoulders are lacking compared to my other lifts...'
 FROM Users U;
+
+INSERT INTO MotivationWall (email, name, description)
+SELECT 'steven@gmail.com', 'Summer Grind 2024', 'It is time to get our bodies in shape during this upcoming summer!!!';
+
+INSERT INTO MotivationWall (email, name, description)
+SELECT 'ysabella@gmail.com', 'How I lost 100 lbs in 3 months...', 'Read about my weight-loss story...';
+
+INSERT INTO MotivationWall (email, name, description)
+SELECT 'ethan@gmail.com', 'How to squat properly?', 'Can someone help me with my squat form?';
