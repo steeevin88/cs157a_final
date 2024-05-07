@@ -188,7 +188,7 @@ const deleteExercise = asyncHandler(async (req, res) => {
 module.exports = {
   getExercises,
   getExerciseById,
-  setExercise,
+  createExercise,
   updateExercise,
   deleteExercise
 };

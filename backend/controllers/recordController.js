@@ -99,6 +99,6 @@ const deleteRecord = asyncHandler(async (req, res) => {
 
 module.exports = {
   getRecords,
-  setRecord,
+  createRecord,
   deleteRecord
 };
