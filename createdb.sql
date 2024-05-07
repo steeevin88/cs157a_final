@@ -117,42 +117,39 @@ VALUES
 
 -- Insert default exercises for users
 INSERT INTO Exercises (email, name, muscle_group)
-VALUES 
-  ('steven@gmail.com', 'Bench Press', 'Chest'),
-  ('steven@gmail.com', 'Squat', 'Legs'),
-  ('steven@gmail.com', 'Leg Press', 'Legs'),
-  ('steven@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
-  ('steven@gmail.com', 'Lat Pulldown', 'Back'),
-  ('steven@gmail.com', 'Abdominal Crunch', 'Other'),
-  ('steven@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
-  ('ethan@gmail.com', 'Bench Press', 'Chest'),
-  ('ethan@gmail.com', 'Squat', 'Legs'),
-  ('ethan@gmail.com', 'Leg Press', 'Legs'),
-  ('ethan@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
-  ('ethan@gmail.com', 'Lat Pulldown', 'Back'),
-  ('ethan@gmail.com', 'Abdominal Crunch', 'Other'),
-  ('ethan@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
-  ('kelly@gmail.com', 'Bench Press', 'Chest'),
-  ('kelly@gmail.com', 'Squat', 'Legs'),
-  ('kelly@gmail.com', 'Leg Press', 'Legs'),
-  ('kelly@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
-  ('kelly@gmail.com', 'Lat Pulldown', 'Back'),
-  ('kelly@gmail.com', 'Abdominal Crunch', 'Other'),
-  ('kelly@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
-  ('ysabella@gmail.com', 'Bench Press', 'Chest'),
-  ('ysabella@gmail.com', 'Squat', 'Legs'),
-  ('ysabella@gmail.com', 'Leg Press', 'Legs'),
-  ('ysabella@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
-  ('ysabella@gmail.com', 'Lat Pulldown', 'Back'),
-  ('ysabella@gmail.com', 'Abdominal Crunch', 'Other'),
-  ('ysabella@gmail.com', 'Bicep Curls', 'Arms/Shoulders'),
-  ('andy@gmail.com', 'Bench Press', 'Chest'),
-  ('andy@gmail.com', 'Squat', 'Legs'),
-  ('andy@gmail.com', 'Leg Press', 'Legs'),
-  ('andy@gmail.com', 'Shoulder Press', 'Arms/Shoulders'),
-  ('andy@gmail.com', 'Lat Pulldown', 'Back'),
-  ('andy@gmail.com', 'Abdominal Crunch', 'Other'),
-  ('andy@gmail.com', 'Bicep Curls', 'Arms/Shoulders');
+SELECT U.email, 'Bench Press', 'Chest'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
+
+INSERT INTO Exercises (email, name, muscle_group)
+SELECT U.email, 'Squat', 'Legs'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
+
+INSERT INTO Exercises (email, name, muscle_group)
+SELECT U.email, 'Leg Press', 'Legs'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
+
+INSERT INTO Exercises (email, name, muscle_group)
+SELECT U.email, 'Shoulder Press', 'Arms/Shoulders'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
+
+INSERT INTO Exercises (email, name, muscle_group)
+SELECT U.email, 'Lat Pulldown', 'Back'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
+
+INSERT INTO Exercises (email, name, muscle_group)
+SELECT U.email, 'Abdominal Crunch', 'Other'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
+
+INSERT INTO Exercises (email, name, muscle_group)
+SELECT U.email, 'Bicep Curls', 'Arms/Shoulders'
+FROM Users U
+WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
 
 -- Insert default records for users (bench press)
 INSERT INTO Records (email, EID, weight, repetitions, date)
@@ -215,3 +212,12 @@ SELECT U.email, E.EID, '185 lbs', 1, CURDATE()
 FROM Users U
 JOIN Exercises E ON U.email = E.email
 WHERE E.name = 'Squat';
+
+-- Insert default goals for users
+INSERT INTO Goals (email, name, description)
+SELECT U.email, 'Summer Cut', 'I need to lose weight by the end of summer. I''m expecting to lose around 5-7 pounds while maintaining my strength...'
+FROM Users U;
+
+INSERT INTO Goals (email, name, description)
+SELECT U.email, 'Gain Strength in Shoulder Press', 'I want to increase my shoulder press strength because my shoulders are lacking compared to my other lifts...'
+FROM Users U;

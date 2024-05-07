@@ -11,6 +11,7 @@ function MotivationWallCard({ motivationWall }) {
         {motivationWall.name}
       </Link>
       <h4>{motivationWall.description}</h4>
+      <h5>Created by: {motivationWall.email}</h5>
       <button onClick={() => dispatch(deleteMotivationWall(motivationWall.MWID))} className='close'>
         X
       </button>
