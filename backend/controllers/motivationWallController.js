@@ -12,7 +12,6 @@ const getMotivationWalls = asyncHandler(async (req, res) => {
   });
 });
 
-
 // @desc      Get motivation wall by ID
 // @route     GET /api/motivation_walls/:id
 // @access    Private

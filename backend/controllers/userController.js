@@ -111,8 +111,6 @@ const getUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
-
-// generate JWT
 // Generate JWT token, expires in 30 days
 const generateToken = (id) => {
   return JWT.sign({ id }, process.env.JWT_SECRET, {
