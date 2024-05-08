@@ -21,6 +21,7 @@ app.use('/api/exercises', require('./routes/exerciseRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/records', require('./routes/recordRoutes'));
 app.use('/api/goals', require('./routes/goalRoutes'));
+app.use('/api/gyms', require('./routes/gymRoutes'));
 app.use('/api/motivation_walls', require('./routes/motivationWallRoutes'));
 app.use('/api/messages', require('./routes/motivationWallMessageRoutes'));
 

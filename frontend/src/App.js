@@ -9,6 +9,7 @@ import Exercise from './pages/Exercise'
 import Goals from './pages/Goals'
 import MotivationWalls from './pages/MotivationWalls'
 import MotivationWallMessages from './pages/MotivationWallMessages'
+import Gyms from './pages/Gyms'
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/exercise/:id' element={<Exercise />} />
             <Route path='/goals' element={<Goals />} />
-            <Route path='/gyms' element={<h1>Find Gyms</h1>} />
+            <Route path='/gyms' element={<Gyms />} />
             <Route path='/workouts' element={<h1>Workouts</h1>} />
             <Route path='/motivation' element={<MotivationWalls />} />
             <Route path='/motivation/:id' element={<MotivationWallMessages />} />
