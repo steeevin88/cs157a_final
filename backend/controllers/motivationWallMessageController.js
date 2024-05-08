@@ -13,9 +13,9 @@ const getMessages = asyncHandler(async (req, res) => {
     FROM MotivationalMessages MM
     INNER JOIN MotivationWallMessages MWM ON MM.MMID = MWM.MMID
     INNER JOIN MotivationWall MW ON MWM.MWID = MW.MWID
-    WHERE MW.MWID = ? AND MW.email = ?
+    WHERE MW.MWID = ?
   `;
-  const values = [motivation_wall_id, email];
+  const values = [motivation_wall_id];
 
   db.query(sql, values, (err, result) => {
     if (err) {
