@@ -82,14 +82,14 @@ const deleteGym = asyncHandler(async (req, res) => {
       const sql_3 = 'DELETE FROM Location WHERE LID = ?';
       const values = [locationID];
 
-    //   db.query(sql_3, values, (err, result) => {
-    //     if (err) {
-    //       res.status(500);
-    //       throw new Error('Failed to delete location.');
-    //     }
+      db.query(sql_3, values, (err, result) => {
+        if (err) {
+          res.status(500);
+          throw new Error('Failed to delete location.');
+        }
 
-    //     return res.status(200).json({ message: 'Location deleted successfully.' });
-    //   });
+        return res.status(200).json({ message: 'Location deleted successfully.' });
+      });
     });
   });
 });

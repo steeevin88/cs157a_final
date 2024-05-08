@@ -48,10 +48,10 @@ export default function Gyms() {
         {gyms.length > 0 ? (
           <div className='flex flex-col gap-2'>
             {gyms.map((gym) => (
-              <div key={gym.GID} className='border-2 border-black rounded-lg exercise'>
+              <div key={gym.LID} className='border-2 border-black rounded-lg exercise'>
                 <p className="mb-2 text-2xl font-bold">{gym.name}</p>
                 <h4>{gyms.address}</h4>
-                <button onClick={() => dispatch(deleteGym(gym.GID))} className='close'>
+                <button onClick={() => dispatch(deleteGym(gym.LID))} className='close'>
                   X
                 </button>
             </div>
