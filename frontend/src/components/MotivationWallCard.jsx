@@ -10,7 +10,7 @@ function MotivationWallCard({ motivationWall }) {
       <Link to={`/motivation/${motivationWall.MWID}`} className="mb-2 text-2xl font-bold">   
         {motivationWall.name}
       </Link>
-      <h4>{motivationWall.description}</h4>
+      <p className='px-2'>{motivationWall.description}</p>
       <h5>Created by: {motivationWall.email}</h5>
       <button onClick={() => dispatch(deleteMotivationWall(motivationWall.MWID))} className='close'>
         X

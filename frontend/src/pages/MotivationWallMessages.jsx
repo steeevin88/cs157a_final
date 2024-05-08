@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import MotivationForm from "../components/MotivationForm";
+import MotivationMessageForm from "../components/MotivationMessageForm";
 import Spinner from "../components/Spinner";
-import { getExercises, reset } from "../features/exercises/exerciseSlice";
-import ExerciseCard from "../components/ExerciseCard";
 import { getMotivationWallById } from "../features/motivationWalls/motivationWallSlice";
+import { getMessages, reset } from "../features/motivationMessages/motivationMessageSlice";
+import { formatDate } from "../utils/formatDate";
 
 export default function MotivationWallMessages() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function MotivationWallMessages() {
 
   const { user } = useSelector((state) => state.auth);
   const { motivation_walls } = useSelector((state) => state.motivationWalls);
-  const { exercises, isLoading, isError, message} = useSelector((state) => state.exercises);
+  const { motivation_messages, isLoading, isError, message} = useSelector((state) => state.motivationMessages);
 
   // this will be a single wall bc we used getMotivationWallById
   const wall_info = motivation_walls;
@@ -25,7 +25,7 @@ export default function MotivationWallMessages() {
     if (!user) navigate("/login");
     else {
       dispatch(getMotivationWallById(id));
-      dispatch(getExercises());
+      dispatch(getMessages(id));
     }
 
     return () => {
@@ -44,16 +44,23 @@ export default function MotivationWallMessages() {
         <p className="text-2xl">{wall_info.description}</p>
       </section>
       <div className="flex flex-row gap-4">
-        <MotivationForm />
+        <MotivationMessageForm id={id}/>
         <section className='mx-auto w-[100%]'>
-          {exercises.length > 0 ? (
+          {motivation_messages.length > 0 ? (
             <div className='grid gap-2'>
-              {exercises.map((exercise) => (
-                <ExerciseCard key={exercise.EID} exercise={exercise}/>
-              ))}
+              {[...motivation_messages]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .map((message) => (
+                  <div className="flex flex-col gap-4 p-3 border-2 border-black rounded-lg">
+                    <p className="text-2xl">{message.content}</p>
+                    <p className="text-sm">
+                      Posted on: {formatDate(message.date) + " at " + new Date(message.date).toLocaleTimeString()} | Posted by: {message.email}
+                    </p>
+                  </div>
+                ))}
             </div>
           ) : (
-            <h3>You have not added any exercises</h3>
+            <h3>No messages have been posted...</h3>
           )}
         </section>
       </div>

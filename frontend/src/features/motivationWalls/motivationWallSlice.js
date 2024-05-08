@@ -11,7 +11,7 @@ export const getMotivationWalls = createAsyncThunk('motivation_walls/get', async
   }
 })
 
-// Get exercise by ID
+// Get motivation wall by id
 export const getMotivationWallById = createAsyncThunk('motivation_walls/getById', async (id, thunkAPI) => {
   try {
     return await motivationWallService.getMotivationWallById(id, thunkAPI.getState().auth.user.token);
@@ -21,7 +21,7 @@ export const getMotivationWallById = createAsyncThunk('motivation_walls/getById'
   }
 })
 
-// Add an exercise
+// Add a motivation wall
 export const addMotivationWall = createAsyncThunk('motivation_walls/add', async (exerciseData, thunkAPI) => {
   try {
     return await motivationWallService.addMotivationWall(exerciseData, thunkAPI.getState().auth.user.token);
@@ -31,7 +31,7 @@ export const addMotivationWall = createAsyncThunk('motivation_walls/add', async 
   }
 })
 
-// Delete an exercise
+// Delete a motivation wall
 export const deleteMotivationWall = createAsyncThunk('motivation_walls/delete', async (id, thunkAPI) => {
   try {
     return await motivationWallService.deleteMotivationWall(id, thunkAPI.getState().auth.user.token);

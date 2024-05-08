@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addExercise } from '../features/exercises/exerciseSlice'
+import { addMessage } from "../features/motivationMessages/motivationMessageSlice"
 
-function MotivationForm() {
+function MotivationMessageForm({id}) {
   const [content, setContent] = useState('')
 
   const dispatch = useDispatch()
 
   const onSubmit = (e) => {
     e.preventDefault()
-
-    dispatch(addExercise({ 
+    dispatch(addMessage({ 
+      wall_id:id,
       content:content
     }))
 
@@ -42,4 +42,4 @@ function MotivationForm() {
   )
 }
 
-export default MotivationForm
+export default MotivationMessageForm

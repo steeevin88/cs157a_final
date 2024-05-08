@@ -4,6 +4,7 @@ import exerciseReducer from '../features/exercises/exerciseSlice';
 import recordReducer from '../features/records/recordSlice';
 import goalReducer from '../features/goals/goalSlice';
 import motivationWallReducer from '../features/motivationWalls/motivationWallSlice';
+import motivationMessageReducer from '../features/motivationMessages/motivationMessageSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     records: recordReducer,
     goals: goalReducer,
     motivationWalls: motivationWallReducer,
+    motivationMessages: motivationMessageReducer,
   },
 });

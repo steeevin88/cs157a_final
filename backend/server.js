@@ -22,5 +22,6 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/records', require('./routes/recordRoutes'));
 app.use('/api/goals', require('./routes/goalRoutes'));
 app.use('/api/motivation_walls', require('./routes/motivationWallRoutes'));
+app.use('/api/messages', require('./routes/motivationWallMessageRoutes'));
 
 app.listen(8000, () => {console.log(`Server is running on port 8000`)});
