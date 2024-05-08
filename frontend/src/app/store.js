@@ -6,6 +6,8 @@ import goalReducer from '../features/goals/goalSlice';
 import gymReducer from '../features/gyms/gymSlice';
 import motivationWallReducer from '../features/motivationWalls/motivationWallSlice';
 import motivationMessageReducer from '../features/motivationMessages/motivationMessageSlice';
+import workoutReducer from '../features/workouts/workoutSlice';
+import workoutExerciseReducer from '../features/workoutExercises/workoutExerciseSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +18,7 @@ export const store = configureStore({
     gyms: gymReducer,
     motivationWalls: motivationWallReducer,
     motivationMessages: motivationMessageReducer,
+    workouts: workoutReducer,
+    workout_exercises: workoutExerciseReducer,
   },
 });
