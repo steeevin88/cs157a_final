@@ -24,5 +24,7 @@ app.use('/api/goals', require('./routes/goalRoutes'));
 app.use('/api/gyms', require('./routes/gymRoutes'));
 app.use('/api/motivation_walls', require('./routes/motivationWallRoutes'));
 app.use('/api/messages', require('./routes/motivationWallMessageRoutes'));
+app.use('/api/workouts', require('./routes/workoutRoutes'));
+app.use('/api/workout_exercises', require('./routes/workoutExercisesRoutes'));
 
 app.listen(8000, () => {console.log(`Server is running on port 8000`)});
