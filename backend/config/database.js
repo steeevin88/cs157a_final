@@ -41,6 +41,79 @@ const connectDB = () => {
             console.log('SQL query executed successfully');
           });
         });
+
+        // use JavaScript to populate the MotivationWall table with 1000 rows -- this is to prove indexing
+        for (let i = 1; i <= 1000; i++) {
+          const name = `Wall ${i}`;
+          const description = `Description for Wall ${i}`;
+          const sql = "INSERT INTO MotivationWall (email, name, description) VALUES ('ethan@gmail.com', ?, ?)";
+    
+          db.query(sql, [name, description], (err, result) => {
+            if (err) {
+              console.error('Error executing SQL query:', err);
+              return;
+            }
+            // console.log('SQL query executed successfully'); // Commented out to reduce console.log noise
+          });
+        }
+
+        // use JavaScript to populate a users Exercises with 1000 rows -- this is to prove indexing
+        for (let i = 1; i <= 1000; i++) {
+          const email = 'steven@gmail.com';
+          const weight = '3 lbs';
+          const repetitions = i;
+          const date = new Date().toISOString().slice(0, 10);
+
+          const sql = `
+            INSERT INTO Records (email, EID, weight, repetitions, date)
+            SELECT ?, E.EID, ?, ?, ?
+            FROM Users U
+            JOIN Exercises E ON U.email = E.email
+            WHERE U.email = ?
+              AND E.name = 'Bench Press'
+          `;
+
+          db.query(sql, [email, weight, repetitions, date, email], (err, result) => {
+            if (err) {
+              console.error('Error executing SQL query:', err);
+              return;
+            }
+            // console.log('SQL query executed successfully');
+          });
+
+        }
+
+        // use JavaScript to populate the Goals table with 1000 rows -- this is to prove indexing
+        for (let i = 1; i <= 1000; i++) {
+          const name = `Goal ${i}`;
+          const description = `This is goal ${i}`;
+          const sql = "INSERT INTO Goals (email, name, description) VALUES ('steven@gmail.com', ?, ?)";
+    
+          db.query(sql, [name, description], (err, result) => {
+            if (err) {
+              console.error('Error executing SQL query:', err);
+              return;
+            }
+            // console.log('SQL query executed successfully'); // Commented out to reduce console.log noise
+          });
+        }
+
+        // use JavaScript to populate the WorkoutRoutines table with 1000 rows -- this is to prove indexing
+        for (let i = 1; i <= 1000; i++) {
+          const email = 'steven@gmail.com';
+          const name = `Workout ${i}`;
+          const time = `${i} minutes`;
+          const notes = `Notes for Workout ${i}`;
+          const sql = "INSERT INTO WorkoutRoutines (email, name, time, notes) VALUES (?, ?, ?, ?)";
+
+          db.query(sql, [email, name, time, notes], (err, result) => {
+            if (err) {
+              console.error('Error executing SQL query:', err);
+              return;
+            }
+            // console.log('SQL query executed successfully'); // Commented out to reduce console.log noise
+          });
+        }
       } else {
         // Switch to the pr_tracker database
         db.changeUser({ database: 'pr_tracker' }, (err) => {
@@ -48,7 +121,7 @@ const connectDB = () => {
             console.error('Error switching to database:', err);
             return;
           }
-          console.log('Switched to pr_tracker database');
+          console.log('The pr_tracker database has already been created; switching to it...');
         });
       }
     });

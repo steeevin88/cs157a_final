@@ -96,15 +96,10 @@ CREATE TABLE MotivationWallMessages (
 
 -- Indexes via b-tree
 CREATE INDEX idx_users_email ON Users (email);
-CREATE INDEX idx_exercises_eid ON Exercises (EID);
-CREATE INDEX idx_records_rid ON Records (RID);
-CREATE INDEX idx_goals_gid ON Goals (GID);
-CREATE INDEX idx_location_lid ON Location (LID);
-CREATE INDEX idx_workoutroutines_wid ON WorkoutRoutines (WID);
-CREATE INDEX idx_workoutroutineexercises_eid_wid ON WorkoutRoutineExercises (EID, WID);
+CREATE INDEX idx_exercises_email ON Exercises (email);
+CREATE INDEX idx_goals_email ON Goals (email);
+CREATE INDEX idx_workoutroutines_email ON WorkoutRoutines (email);
 CREATE INDEX idx_motivationwall_mwid ON MotivationWall (MWID);
-CREATE INDEX idx_motivationalmessages_mmid ON MotivationalMessages (MMID);
-CREATE INDEX idx_motivationwallmessages_mwid_mmid ON MotivationWallMessages (MWID, MMID);
 
 -- Insert default user, password is password for ALL users...
 INSERT INTO Users (email, name, password)
@@ -220,6 +215,10 @@ FROM Users U;
 
 INSERT INTO Goals (email, name, description)
 SELECT U.email, 'Gain Strength in Shoulder Press', 'I want to increase my shoulder press strength because my shoulders are lacking compared to my other lifts...'
+FROM Users U;
+
+INSERT INTO Goals (email, name, description)
+SELECT U.email, 'Gain Strength in Squat', 'I want to increase my squatting strength because my legs are small and underdeveloped when put in comparison to my upper body. Squatting should lead to overall greater leg size...'
 FROM Users U;
 
 INSERT INTO MotivationWall (email, name, description)
