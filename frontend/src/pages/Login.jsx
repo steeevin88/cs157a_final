@@ -62,7 +62,7 @@ function Login() {
                 <h1>Login</h1>
                 <FaSignInAlt className="mt-2"/>
             </div>
-            <p> Please create an account </p>
+            <p> Please log in to view your records </p>
         </section>
 
       <section className='form'>

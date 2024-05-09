@@ -16,9 +16,8 @@ const getGyms = asyncHandler(async (req, res) => {
 // @route     POST /api/gyms
 // @access    Private
 const createGym = asyncHandler(async (req, res) => {
-  const { name, address } = req.body;
+  const { name, address, description } = req.body;
   const email = req.user.email;
-  console.log(name + " " + address)
 
   if (!name || !address) {
     res.status(400);
@@ -26,8 +25,8 @@ const createGym = asyncHandler(async (req, res) => {
   }
 
   const db = req.app.get('db');
-  const sql = 'INSERT INTO Location (email, name, address) VALUES (?, ?, ?)';
-  const values = [email, name, address];
+  const sql = 'INSERT INTO Location (email, name, address, description) VALUES (?, ?, ?, ?)';
+  const values = [email, name, address, description];
 
   db.query(sql, values, (err, result) => {
     if (err) {
@@ -74,8 +73,7 @@ const deleteGym = asyncHandler(async (req, res) => {
       const locationExists = result.length > 0;
 
       if (!locationExists) {
-        res.status(400);
-        throw new Error('Location does not exist or you do not own it.');
+        res.status(400).json( { message: 'Location does not exist or you do not own it.' });
       }
 
       // if user owns the location, delete location

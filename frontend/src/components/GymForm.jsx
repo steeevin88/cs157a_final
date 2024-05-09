@@ -5,6 +5,7 @@ import { addGym } from '../features/gyms/gymSlice'
 function GymForm() {
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
+  const [description, setDescription] = useState('')
 
   const dispatch = useDispatch()
 
@@ -13,7 +14,8 @@ function GymForm() {
 
     dispatch(addGym({ 
       name:name,
-      address:address
+      address:address,
+      description:description
     }))
 
     setName('')
@@ -23,7 +25,7 @@ function GymForm() {
 
   return (
     <section className='form'>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className=''>
         <div className='text-lg form-group'>
           <label htmlFor='text'>What's the name of your gym?</label>
           <input
@@ -42,6 +44,15 @@ function GymForm() {
             value={address}
             placeholder='Enter Address'
             onChange={(e) => setAddress(e.target.value)}
+          />
+          <label htmlFor='text'>Description</label>
+          <textarea
+            type='text'
+            name='text'
+            id='text'
+            value={description}
+            placeholder='Enter Description'
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <div className='form-group'>

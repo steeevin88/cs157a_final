@@ -11,6 +11,8 @@ export default function Gyms() {
 
   const { user } = useSelector((state) => state.auth);
   const { gyms, isLoading, isError, message} = useSelector((state) => state.gyms);
+  console.log(user)
+  console.log(gyms)
 
   useEffect(() => {
     if (isError) alert(message);
@@ -29,7 +31,7 @@ export default function Gyms() {
   return (
     <>
       <section className="flex flex-col justify-center gap-5 mb-5">
-        <p className="text-5xl font-bold text-black">View all gyms:</p>
+        <p className="text-5xl font-bold text-black">View all Gyms</p>
         <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>Add a new Gym</button>
       </section>
       {/* daisyui modal */}
@@ -50,10 +52,12 @@ export default function Gyms() {
             {gyms.map((gym) => (
               <div key={gym.LID} className='border-2 border-black rounded-lg exercise'>
                 <p className="mb-2 text-2xl font-bold">{gym.name}</p>
-                <h4>{gyms.address}</h4>
-                <button onClick={() => dispatch(deleteGym(gym.LID))} className='close'>
+                <h4> {gym.address} </h4>
+                <h5> {gym.description} </h5>
+                {(gym.email === user.email) && <button onClick={() => dispatch(deleteGym(gym.LID))} className='close'>
                   X
-                </button>
+                </button>}
+                <h5> {gym.email} </h5>
             </div>
             ))}
           </div>
