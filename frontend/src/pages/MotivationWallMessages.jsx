@@ -54,7 +54,7 @@ export default function MotivationWallMessages() {
                   <div className="flex flex-col gap-4 p-3 border-2 border-black rounded-lg">
                     <p className="text-2xl">{message.content}</p>
                     <p className="text-sm">
-                      Posted on: {formatDate(message.date) + " at " + new Date(message.date).toLocaleTimeString()} | Posted by: {message.email}
+                      Posted on: {formatDate(message.message_date) + " at " + new Date(message.message_date).toLocaleTimeString()} | Posted by: {message.email}
                     </p>
                   </div>
                 ))}

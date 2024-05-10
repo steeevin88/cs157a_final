@@ -7,7 +7,12 @@ const getRecords = asyncHandler(async (req, res) => {
   const db = req.app.get('db');
   const exercise_id = req.params.id;
   const email = req.user.email;
-  const sql = "SELECT * FROM Records WHERE email = ? AND EID = ?";
+  const sql = `
+    SELECT Records.*, RecordDates.record_date
+    FROM Records
+    INNER JOIN RecordDates ON Records.RID = RecordDates.RID
+    WHERE Records.email = ? AND Records.EID = ?
+  `;
   const values = [email, exercise_id];
   db.query(sql, values, (err, result) => {
     if (err) return res.json({ error: err });
@@ -28,7 +33,7 @@ const createRecord = asyncHandler(async (req, res) => {
   }
 
   const db = req.app.get('db');
-  const sql = 'INSERT INTO Records (email, EID, weight, repetitions, date) VALUES (?, ?, ?, ?, CURDATE())';
+  const sql = 'INSERT INTO Records (email, EID, weight, repetitions) VALUES (?, ?, ?, ?)';
   const values = [email, parseInt(exercise_id), weight, parseInt(repetitions)];
 
   db.query(sql, values, (err, result) => {
@@ -38,7 +43,20 @@ const createRecord = asyncHandler(async (req, res) => {
       throw new Error('Failed to set record.');
     }
 
-    return res.status(200).json({ message: 'Record added successfully.' });
+    const recordId = result.insertId;
+
+    // Add record date to RecordDates table
+    const sql2 = 'INSERT INTO RecordDates (RID, record_date) VALUES (?, CURDATE())';
+    const values2 = [recordId];
+
+    db.query(sql2, values2, (err2, result2) => {
+      if (err2) {
+        res.status(500);
+        throw new Error('Failed to add record date.');
+      }
+
+      return res.status(200).json({ message: 'Record added successfully.' });
+    });
   });
 });
 

@@ -65,20 +65,33 @@ const connectDB = () => {
           const date = new Date().toISOString().slice(0, 10);
 
           const sql = `
-            INSERT INTO Records (email, EID, weight, repetitions, date)
-            SELECT ?, E.EID, ?, ?, ?
+            INSERT INTO Records (email, EID, weight, repetitions)
+            SELECT ?, E.EID, ?, ?
             FROM Users U
             JOIN Exercises E ON U.email = E.email
             WHERE U.email = ?
               AND E.name = 'Bench Press'
           `;
 
-          db.query(sql, [email, weight, repetitions, date, email], (err, result) => {
+          db.query(sql, [email, weight, repetitions, email], (err, result) => {
             if (err) {
               console.error('Error executing SQL query:', err);
               return;
             }
-            // console.log('SQL query executed successfully');
+            const RID = result.insertId;
+
+            const recordDateSql = `
+              INSERT INTO RecordDates (RID, record_date)
+              VALUES (?, ?)
+            `;
+
+            db.query(recordDateSql, [RID, date], (err, result) => {
+              if (err) {
+                console.error('Error executing SQL query:', err);
+                return;
+              }
+              // console.log('SQL query executed successfully');
+            });
           });
 
         }

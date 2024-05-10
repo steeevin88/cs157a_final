@@ -1,14 +1,14 @@
 CREATE DATABASE pr_tracker;
 USE pr_tracker;
 
--- 1. Users table
+-- 1. Users table (entity 1)
 CREATE TABLE Users (
   email VARCHAR(255) PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL
 );
 
--- 2. Exercises table
+-- 2. Exercises table (entity 2)
 CREATE TABLE Exercises (
   EID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
@@ -17,19 +17,18 @@ CREATE TABLE Exercises (
   FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
--- 3. Records table
+-- 3. Records table (entity 3)
 CREATE TABLE Records (
   RID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   EID INT NOT NULL,
   weight VARCHAR(255),
   repetitions INT,
-  date DATE NOT NULL,
   FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE,
   FOREIGN KEY (EID) REFERENCES Exercises(EID) ON DELETE CASCADE
 );
 
--- 4. Goals table
+-- 4. Goals table (entity 4)
 CREATE TABLE Goals (
   GID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
@@ -38,7 +37,7 @@ CREATE TABLE Goals (
   FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
--- 5. Location table
+-- 5. Location table (entity 5)
 CREATE TABLE Location (
   LID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
@@ -48,7 +47,7 @@ CREATE TABLE Location (
   FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
--- 6. Workout Routines table
+-- 6. Workout Routines table (entity 6)
 CREATE TABLE WorkoutRoutines (
   WID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
@@ -67,7 +66,7 @@ CREATE TABLE WorkoutRoutineExercises (
   FOREIGN KEY (WID) REFERENCES WorkoutRoutines(WID)
 );
 
--- 8. MotivationWall table
+-- 8. MotivationWall table (entity 7)
 CREATE TABLE MotivationWall (
   MWID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
@@ -76,12 +75,11 @@ CREATE TABLE MotivationWall (
   FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
--- 9. MotivationalMessages table
+-- 9. MotivationalMessages table (entity 8)
 CREATE TABLE MotivationalMessages (
   MMID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
-  date DATETIME NOT NULL,
   FOREIGN KEY (email) REFERENCES Users(email) ON DELETE CASCADE
 );
 
@@ -94,12 +92,30 @@ CREATE TABLE MotivationWallMessages (
   FOREIGN KEY (MMID) REFERENCES MotivationalMessages(MMID)
 );
 
+-- 11. RecordDates table (entity 9)
+CREATE TABLE RecordDates (
+  RID INT NOT NULL,
+  record_date DATE NOT NULL,
+  PRIMARY KEY (RID),
+  FOREIGN KEY (RID) REFERENCES Records(RID) ON DELETE CASCADE
+);
+
+-- 12. MotivationalMessageDates table (entity 10)
+CREATE TABLE MotivationalMessageDates (
+  MMID INT NOT NULL,
+  message_date DATETIME NOT NULL,
+  PRIMARY KEY (MMID),
+  FOREIGN KEY (MMID) REFERENCES MotivationalMessages(MMID) ON DELETE CASCADE
+);
+
 -- Indexes via b-tree
 CREATE INDEX idx_users_email ON Users (email);
 CREATE INDEX idx_exercises_email ON Exercises (email);
 CREATE INDEX idx_goals_email ON Goals (email);
 CREATE INDEX idx_workoutroutines_email ON WorkoutRoutines (email);
 CREATE INDEX idx_motivationwall_mwid ON MotivationWall (MWID);
+CREATE INDEX idx_recorddates_rid ON RecordDates (RID);
+CREATE INDEX idx_motivationalmessagedates_mmid ON MotivationalMessageDates (MMID);
 
 -- Insert default user, password is password for ALL users...
 INSERT INTO Users (email, name, password)
@@ -147,66 +163,65 @@ FROM Users U
 WHERE U.email IN ('steven@gmail.com', 'ethan@gmail.com', 'kelly@gmail.com', 'ysabella@gmail.com', 'andy@gmail.com');
 
 -- Insert default records for users (bench press)
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '95 lbs', 5, DATE_SUB(CURDATE(), INTERVAL 8 WEEK)
+INSERT INTO Records (email, EID, weight, repetitions)
+SELECT U.email, E.EID, '95 lbs', 5
 FROM Users U
 JOIN Exercises E ON U.email = E.email
 WHERE E.name = 'Bench Press';
 
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '100 lbs', 6, DATE_SUB(CURDATE(), INTERVAL 7 WEEK)
+INSERT INTO RecordDates (RID, record_date)
+SELECT R.RID, DATE_SUB(CURDATE(), INTERVAL 8 WEEK)
+FROM Records R
+JOIN Exercises E ON R.EID = E.EID
+WHERE E.name = 'Bench Press' AND R.weight = '95 lbs';
+
+INSERT INTO Records (email, EID, weight, repetitions)
+SELECT U.email, E.EID, '100 lbs', 6
 FROM Users U
 JOIN Exercises E ON U.email = E.email
 WHERE E.name = 'Bench Press';
 
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '135 lbs', 3, DATE_SUB(CURDATE(), INTERVAL 5 WEEK)
+INSERT INTO RecordDates (RID, record_date)
+SELECT R.RID, DATE_SUB(CURDATE(), INTERVAL 7 WEEK)
+FROM Records R
+JOIN Exercises E ON R.EID = E.EID
+WHERE E.name = 'Bench Press' AND R.weight = '100 lbs';
+
+INSERT INTO Records (email, EID, weight, repetitions)
+SELECT U.email, E.EID, '135 lbs', 3
 FROM Users U
 JOIN Exercises E ON U.email = E.email
 WHERE E.name = 'Bench Press';
 
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '135 lbs', 7, DATE_SUB(CURDATE(), INTERVAL 2 WEEK)
+INSERT INTO RecordDates (RID, record_date)
+SELECT R.RID, DATE_SUB(CURDATE(), INTERVAL 5 WEEK)
+FROM Records R
+JOIN Exercises E ON R.EID = E.EID
+WHERE E.name = 'Bench Press' AND R.weight = '135 lbs' AND R.repetitions = 3;
+
+INSERT INTO Records (email, EID, weight, repetitions)
+SELECT U.email, E.EID, '135 lbs', 7
 FROM Users U
 JOIN Exercises E ON U.email = E.email
 WHERE E.name = 'Bench Press';
 
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '155 lbs', 1, CURDATE()
+INSERT INTO RecordDates (RID, record_date)
+SELECT R.RID, DATE_SUB(CURDATE(), INTERVAL 2 WEEK)
+FROM Records R
+JOIN Exercises E ON R.EID = E.EID
+WHERE E.name = 'Bench Press' AND R.weight = '135 lbs' AND R.repetitions = 7;
+
+INSERT INTO Records (email, EID, weight, repetitions)
+SELECT U.email, E.EID, '155 lbs', 1
 FROM Users U
 JOIN Exercises E ON U.email = E.email
 WHERE E.name = 'Bench Press';
 
--- Insert default records for users (squat)
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '135 lbs', 4, DATE_SUB(CURDATE(), INTERVAL 8 WEEK)
-FROM Users U
-JOIN Exercises E ON U.email = E.email
-WHERE E.name = 'Squat';
-
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '145 lbs', 6, DATE_SUB(CURDATE(), INTERVAL 7 WEEK)
-FROM Users U
-JOIN Exercises E ON U.email = E.email
-WHERE E.name = 'Squat';
-
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '135 lbs', 10, DATE_SUB(CURDATE(), INTERVAL 5 WEEK)
-FROM Users U
-JOIN Exercises E ON U.email = E.email
-WHERE E.name = 'Squat';
-
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '155 lbs', 7, DATE_SUB(CURDATE(), INTERVAL 2 WEEK)
-FROM Users U
-JOIN Exercises E ON U.email = E.email
-WHERE E.name = 'Squat';
-
-INSERT INTO Records (email, EID, weight, repetitions, date)
-SELECT U.email, E.EID, '185 lbs', 1, CURDATE()
-FROM Users U
-JOIN Exercises E ON U.email = E.email
-WHERE E.name = 'Squat';
+INSERT INTO RecordDates (RID, record_date)
+SELECT R.RID, CURDATE()
+FROM Records R
+JOIN Exercises E ON R.EID = E.EID
+WHERE E.name = 'Bench Press' AND R.weight = '155 lbs';
 
 -- Insert default goals for users
 INSERT INTO Goals (email, name, description)

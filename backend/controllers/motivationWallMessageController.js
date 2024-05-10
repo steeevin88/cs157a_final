@@ -6,13 +6,13 @@ const asyncHandler = require('express-async-handler')
 const getMessages = asyncHandler(async (req, res) => {
   const db = req.app.get('db');
   const motivation_wall_id = req.params.id;
-  const email = req.user.email;
 
   const sql = `
-    SELECT MM.*
+    SELECT MM.*, MMD.message_date
     FROM MotivationalMessages MM
     INNER JOIN MotivationWallMessages MWM ON MM.MMID = MWM.MMID
     INNER JOIN MotivationWall MW ON MWM.MWID = MW.MWID
+    INNER JOIN MotivationalMessageDates MMD ON MM.MMID = MMD.MMID
     WHERE MW.MWID = ?
   `;
   const values = [motivation_wall_id];
@@ -43,7 +43,7 @@ const createMessage = asyncHandler(async (req, res) => {
   const db = req.app.get('db');
 
   // Insert into MotivationalMessages table
-  const insertMessageSql = 'INSERT INTO MotivationalMessages (email, content, date) VALUES (?, ?, NOW())';
+  const insertMessageSql = 'INSERT INTO MotivationalMessages (email, content) VALUES (?, ?)';
   const insertMessageValues = [email, content];
 
   db.query(insertMessageSql, insertMessageValues, (err, messageResult) => {
@@ -66,7 +66,19 @@ const createMessage = asyncHandler(async (req, res) => {
         throw new Error('Failed to create wall message.');
       }
 
-      return res.status(200).json({ message: 'Message created successfully.' });
+      const currentDate = new Date();
+      const insertMessageDateSql = 'INSERT INTO MotivationalMessageDates (MMID, message_date) VALUES (?, ?)';
+      const insertMessageDateValues = [messageId, currentDate];
+
+      db.query(insertMessageDateSql, insertMessageDateValues, (err, messageDateResult) => {
+        if (err) {
+          res.status(500);
+          console.log(err);
+          throw new Error('Failed to create message date.');
+        }
+
+        return res.status(200).json({ message: 'Message created successfully.' });
+      });
     });
   });
 });
